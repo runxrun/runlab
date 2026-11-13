@@ -49,7 +49,7 @@ if (!VALID_COMMANDS.includes(command)) {
 }
 
 const rootDir = path.resolve(__dirname, "..");
-const projectDir = path.resolve(rootDir, project);
+const projectDir = path.resolve(rootDir, "projects", project);
 
 if (!fs.existsSync(projectDir)) {
   console.error(`❌ Project directory not found: ${projectDir}`);
@@ -76,7 +76,7 @@ console.log(`📂 Working directory: ${projectDir}`);
 const child = spawn(nextBin, cmdArgs, {
   cwd: projectDir,
   stdio: "inherit",
-  shell: true,
+  shell: process.platform === "win32",
   env: {
     ...process.env,
     NEXT_PROJECT_NAME: project,

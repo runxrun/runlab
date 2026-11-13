@@ -1,8 +1,8 @@
 # MTI Next.js Multi-Project Workspace
 
-โครงสร้างโปรเจกต์แบบ Multi-Site ที่ติดตั้ง `node_modules` ไว้ที่ Root (`/Users/runxrun/Documents/mti/nextjs/`) เพียงที่เดียว และรันแยกแต่ละโปรเจกต์ผ่าน `npm run cli`
+โครงสร้างโปรเจกต์แบบ Multi-Site ที่ติดตั้ง `node_modules` ไว้ที่ Root (`/Users/runxrun/Documents/mti/nextjs/`) เพียงที่เดียว โดยเก็บแต่ละโปรเจกต์ไว้ในโฟลเดอร์ `projects/` และรันแยกแต่ละโปรเจกต์ผ่าน `npm run cli`
 
-## รายชื่อโปรเจกต์ที่รองรับ
+## รายชื่อโปรเจกต์ที่รองรับ (`projects/<name>`)
 - `floraprincess` (Default Port: 3000)
 - `noagroup369` (Default Port: 3001)
 - `kachanamaha` (Default Port: 3002)
