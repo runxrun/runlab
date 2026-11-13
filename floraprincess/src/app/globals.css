@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 55 60% 96%;
+    --foreground: 0 0% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+    /* #ec3a46 => hsl(356, 82%, 58%) */
+    --primary: 356 82% 58%;
+    --primary-foreground: 0 0% 100%;
+    /* #9f4246 */
+    --secondary: 357 41% 44%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 55 30% 92%;
+    --muted-foreground: 0 0% 35%;
+    --accent: 321 63% 86%;
+    --accent-foreground: 356 82% 58%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 356 30% 85%;
+    --input: 356 30% 85%;
+    --ring: 356 82% 58%;
+    --radius: 0.25rem;
+  }
+}
+
+html,
+body {
+  font-family: var(--font-sarabun), "Sarabun", sans-serif;
+  background-color: #FCFBF0;
+  background-image: url("/application/images/decor.png");
+  color: #181818;
+  min-height: 100%;
+}
+
+.text-title {
+  font-family: var(--font-sriracha), "Sriracha", sans-serif;
+}
+
+@media only screen and (max-width: 576px) {
+  .bg-screen {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.7);
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+}

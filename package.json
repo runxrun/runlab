@@ -1,0 +1,42 @@
+{
+  "name": "mti-nextjs-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "cli": "node scripts/cli.js",
+    "dev:floraprincess": "node scripts/cli.js floraprincess dev",
+    "build:floraprincess": "node scripts/cli.js floraprincess build",
+    "start:floraprincess": "node scripts/cli.js floraprincess start",
+    "dev:noagroup369": "node scripts/cli.js noagroup369 dev",
+    "build:noagroup369": "node scripts/cli.js noagroup369 build",
+    "dev:kachanamaha": "node scripts/cli.js kachanamaha dev",
+    "build:kachanamaha": "node scripts/cli.js kachanamaha build",
+    "dev:assaypage": "node scripts/cli.js assaypage dev",
+    "build:assaypage": "node scripts/cli.js assaypage build"
+  },
+  "dependencies": {
+    "@radix-ui/react-collapsible": "^1.1.3",
+    "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-navigation-menu": "^1.2.5",
+    "@radix-ui/react-separator": "^1.1.2",
+    "@radix-ui/react-slot": "^1.1.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.475.0",
+    "next": "^15.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.5",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3"
+  }
+}
+
