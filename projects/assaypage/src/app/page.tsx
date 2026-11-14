@@ -1,265 +1,447 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 import {
-  Cloud,
-  CheckCircle2,
-  Zap,
-  ShieldCheck,
+  Menu,
+  Search,
+  Bell,
   Globe,
-  Terminal,
-  Sparkles,
-  ArrowRight,
-  RefreshCw,
-  Layers,
+  UserCircle,
+  Settings,
+  ArrowDown,
+  Database,
   Server,
+  Mouse,
+  ChevronRight,
+  Instagram,
+  Facebook,
+  Linkedin,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Separator } from "@/components/ui/separator";
 
-const FEATURES = [
+const NAV_ITEMS = [
+  { label: "Search", icon: Search, href: "/" },
+  { label: "Notification", icon: Bell, href: "/" },
+  { label: "Languages", icon: Globe, href: "/" },
+  { label: "User", icon: UserCircle, href: "/" },
+  { label: "Setting", icon: Settings, href: "/" },
+];
+
+const HIGHLIGHTS = [
   {
-    icon: Zap,
-    title: "Next.js 15 Static Export",
+    title: "ACXCD",
+    icon: Database,
     description:
-      "ตั้งค่า output: 'export' พร้อมสร้างไฟล์ Static HTML/CSS/JS ที่โฟลเดอร์ out/ สำหรับขึ้น Cloudflare Pages ทันที",
-    badge: "Ready",
+      "Lorem ipsum, dolor sit amet consectetur aporro repudiandae dipisicing elit amet consectetur",
   },
   {
-    icon: Globe,
-    title: "Cloudflare Edge Network",
+    title: "QWEER",
+    icon: Server,
     description:
-      "รองรับการกระจายคอนเทนต์ผ่าน CDN ทั่วโลกด้วยความเร็วสูง Latency ต่ำ และรองรับ SSL อัตโนมัติ",
-    badge: "Global CDN",
+      "Laudantium tenetur porro repud iandae corporis excepturi inventore quo enim cum, voluptatem",
   },
   {
-    icon: Layers,
-    title: "Multi-Project Workspace",
+    title: "POIUK",
+    icon: Mouse,
     description:
-      "แชร์ node_modules ร่วมกันที่ Root Directory ช่วยประหยัดพื้นที่และแยกโฟลเดอร์โปรเจกต์อย่างเป็นระบบ",
-    badge: "Monorepo",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Tailwind CSS + Lucide Icons",
-    description:
-      "ตรวจสอบการทำงานของ CSS Bundling, Responsive Layout และ Client-side State บน Production Build",
-    badge: "UI Verified",
+      "Cupiditate excepturi inventore quo enim cum tenetur porro repudiandae corporis saepe elit amet",
   },
 ];
 
-const DEPLOY_STEPS = [
+const SUB_CARDS = [
   {
-    step: "01",
-    label: "Build Project",
-    command: "npm run build:assaypage",
-    detail: "คอมไพล์โปรเจกต์ assaypage และส่งออกไฟล์ Static ไปยัง projects/assaypage/out",
+    title: "Eius consequatur ex harum iure",
+    subtitleJp: "これらの権利から得た結果",
+    description:
+      "praesentium fugiat suscipit dolorem minus eveniet natus ipsum quod, tempora consequuntur possimus neque debitis enim a pariatur animi minima eos repellat doloremque. Nobis, impedit repudiandae?",
   },
   {
-    step: "02",
-    label: "Output Directory",
-    command: "projects/assaypage/out",
-    detail: "ตั้งค่า Build output directory บน Cloudflare Pages ให้ชี้มาที่โฟลเดอร์นี้",
+    title: "Sit illo obcaecati nemo in soluta nisi",
+    subtitleJp: "野放しの場合を除いて、誰もそれによって盲目になってはなりません",
+    description:
+      "Porro voluptatibus iusto delectus impedit hic sint, magnam dicta sed at repellendus odio error veritatis corporis. Aliquid reprehenderit error dignissimos, quos quae quam.",
+  },
+];
+
+const WEB_TEMPLATES = [
+  { label: "eHotel Gateway", href: "http://train.travflex.com/" },
+  { label: "Rama Gardens", href: "http://ramagardens.assaypage.com/" },
+  { label: "515Proptech", href: "http://515proptech.assaypage.com/" },
+  { label: "Extranet Prototype", href: "http://extranet.assaypage.com" },
+  { label: "CMS B/O Design", href: "http://assaypage.com/CMS/" },
+  { label: "WPS Templates", href: "http://wps.assaypage.com/" },
+  { label: "JTB Sites", href: "http://jtb.assaypage.com/" },
+  { label: "JTB - Canada", href: "http://jtbca.assaypage.com/" },
+  { label: "Chain Hotels", href: "http://m.assaypage.com/" },
+  { label: "Utopia Corp", href: "http://utopia.assaypage.com/" },
+];
+
+const BYGONE_JOURNEYS = [
+  { label: "Thailand", href: "/journeys/thailand" },
+  { label: "Japan", href: "/journeys/japan" },
+  { label: "South Korea", href: "/journeys/south-korea" },
+];
+
+const SOCIAL_LINKS = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/runextreme/",
+    icon: Instagram,
   },
   {
-    step: "03",
-    label: "Verify Live Site",
-    command: "https://assaypage.pages.dev",
-    detail: "ทดสอบการแสดงผลหน้าเว็บ, CSS และ Interactive Component บนโดเมนจริง",
+    label: "Facebook",
+    href: "https://www.facebook.com/nirv.vana.9",
+    icon: Facebook,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/nirv-vana-8897132a/",
+    icon: Linkedin,
   },
 ];
 
 export default function HomePage() {
-  const [pingCount, setPingCount] = useState(0);
-  const [lastCheck, setLastCheck] = useState<string>("พร้อมทดสอบ");
-
-  const handleTestClick = () => {
-    setPingCount((prev) => prev + 1);
-    setLastCheck(new Date().toLocaleTimeString("th-TH"));
+  const scrollToContent = () => {
+    const el = document.getElementById("main-content");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-orange-500/15 blur-[130px] rounded-full" />
-        <div className="absolute top-1/3 -right-32 w-[400px] h-[400px] bg-amber-500/10 blur-[120px] rounded-full" />
+    <div className="rn-background min-h-screen">
+      {/* Top Navbar (Absolute over Hero) */}
+      <div className="relative w-full z-20">
+        <div className="absolute top-0 start-0 w-full">
+          <div className="container">
+            <div className="flex justify-between items-center">
+              {/* Brand Logo */}
+              <div className="py-4">
+                <Link href="/" className="flex items-center">
+                  <img
+                    src="/application/images/assaypage-w.svg"
+                    alt="ASSAYPAGE"
+                    className="max-w-full h-auto"
+                  />
+                </Link>
+              </div>
+
+              {/* Navigation Actions */}
+              <div>
+                {/* Mobile Offcanvas Trigger (shadcn/ui Sheet) */}
+                <div className="block md:hidden">
+                  <Sheet>
+                    <SheetTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className="text-white border-0 rounded py-1 px-3 text-base"
+                        aria-label="Open menu"
+                      >
+                        <Menu className="w-5 h-5" />
+                      </Button>
+                    </SheetTrigger>
+                    <SheetContent
+                      side="right"
+                      className="bg-[#11151c] border-l border-white/15 p-6"
+                    >
+                      <SheetHeader className="flex flex-row items-center justify-between space-y-0">
+                        <SheetTitle className="text-white text-2xl font-normal text-sp">
+                          ASSAYPAGE
+                        </SheetTitle>
+                      </SheetHeader>
+
+                      <div className="py-6">
+                        <div className="flex flex-col">
+                          {NAV_ITEMS.map((item) => {
+                            const Icon = item.icon;
+                            return (
+                              <div
+                                key={item.label}
+                                className="border-b rn-border-opacity"
+                              >
+                                <Button
+                                  asChild
+                                  variant="outline-ghost"
+                                  className="w-full justify-start rounded py-6 px-0 text-base font-normal"
+                                >
+                                  <Link href={item.href}>
+                                    <div className="flex items-center">
+                                      <div className="px-2 opacity-50">
+                                        <Icon className="w-4 h-4" />
+                                      </div>
+                                      <div className="px-2">{item.label}</div>
+                                    </div>
+                                  </Link>
+                                </Button>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </SheetContent>
+                  </Sheet>
+                </div>
+
+                {/* Desktop Icon Menu */}
+                <div className="hidden md:block">
+                  <div className="flex items-center gap-1">
+                    {NAV_ITEMS.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Button
+                          key={item.label}
+                          asChild
+                          variant="outline-ghost"
+                          className="rounded py-1 px-3 text-base"
+                        >
+                          <Link href={item.href} aria-label={item.label}>
+                            <Icon className="w-4 h-4" />
+                          </Link>
+                        </Button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Navbar */}
-      <header className="relative z-10 border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-md">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/25">
-              <Cloud className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <span className="font-bold text-lg tracking-tight text-white">
-                AssayPage
-              </span>
-              <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-orange-500/15 text-orange-400 border border-orange-500/30 font-medium">
-                v1.0.0
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 text-xs sm:text-sm text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Cloudflare Pages Ready</span>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="relative z-10 flex-1 container mx-auto px-4 py-12 sm:py-20">
-        {/* Hero Section */}
-        <section className="max-w-3xl mx-auto text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs sm:text-sm text-slate-300">
-            <Sparkles className="w-4 h-4 text-orange-400" />
-            <span>MTI Next.js Multi-Project Workspace • Port 3003</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
-            ยินดีต้อนรับสู่{" "}
-            <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 bg-clip-text text-transparent">
-              AssayPage
-            </span>
-          </h1>
-
-          <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            หน้า Home Page สำหรับทดสอบการ Build และ Deploy โปรเจกต์{" "}
-            <code className="text-orange-300 bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
-              projects/assaypage
-            </code>{" "}
-            ขึ้นสู่ <strong className="text-slate-200">Cloudflare Pages</strong>{" "}
-            ด้วย Next.js Static Export และ Tailwind CSS
-          </p>
-
-          {/* Interactive Test Card */}
-          <div className="pt-4">
-            <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl">
-              <div className="flex items-center gap-3 text-left">
-                <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-orange-400">
-                  <Server className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-xs text-slate-400">
-                    Client Hydration & State Test
+      {/* Hero Banner */}
+      <div className="pb-6">
+        <div className="rn-banners">
+          <div className="container">
+            <div className="flex w-full items-center justify-center min-h-[660px]">
+              <div className="flex justify-center w-full">
+                <div className="w-full lg:w-8/12">
+                  <div className="pb-2 text-center text-white text-4xl sm:text-5xl font-light text-sp rn-gradient">
+                    ASSAYPAGE
                   </div>
-                  <div className="text-sm font-semibold text-white">
-                    คลิกทดสอบแล้ว:{" "}
-                    <span className="text-orange-400">{pingCount} ครั้ง</span>{" "}
-                    <span className="text-xs text-slate-500 font-normal">
-                      ({lastCheck})
-                    </span>
+                  <div className="pb-6 text-center text-base text-white rn-text-shadow leading-relaxed">
+                    This website serves as a platform for testing web
+                    development and enhancing programming skills. Consequently,
+                    it may not offer substantial information to visitors.
+                  </div>
+                  <div className="pb-6 text-center text-base text-white rn-text-shadow">
+                    We apologize for any inconvenience this may cause.
+                  </div>
+                  <div className="text-center">
+                    <Button
+                      variant="light"
+                      size="icon"
+                      onClick={scrollToContent}
+                      className="rounded-full w-10 h-10 border-0 animate-bounce"
+                      aria-label="Scroll down"
+                    >
+                      <ArrowDown className="w-4 h-4" />
+                    </Button>
                   </div>
                 </div>
               </div>
-
-              <button
-                onClick={handleTestClick}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-medium text-sm shadow-lg shadow-orange-500/25 transition active:scale-95 cursor-pointer"
-              >
-                <RefreshCw className="w-4 h-4" />
-                <span>กดทดสอบการทำงาน</span>
-              </button>
             </div>
           </div>
-        </section>
+        </div>
+      </div>
 
-        {/* Feature Grid */}
-        <section className="mt-16 sm:mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {FEATURES.map((item) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={item.title}
-                className="group p-6 rounded-2xl bg-slate-900/60 border border-slate-800/90 hover:border-orange-500/40 transition flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 group-hover:scale-105 transition">
-                      <Icon className="w-5 h-5" />
+      {/* Main Content Container */}
+      <div id="main-content" className="container">
+        <div className="py-6">
+          {/* 3 Feature Columns (ACXCD, QWEER, POIUK) */}
+          <div className="pb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:flex lg:justify-center gap-6">
+              {HIGHLIGHTS.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={item.title}
+                    className="w-full lg:w-3/12 pb-6 px-0 lg:px-6"
+                  >
+                    <div className="grid grid-cols-12 gap-4 items-center sm:block">
+                      <div className="col-span-4 sm:col-span-12">
+                        <div className="pt-2 flex justify-center text-white rn-gradient">
+                          <Icon className="w-12 h-12 sm:w-14 sm:h-14 stroke-[1.5]" />
+                        </div>
+                      </div>
+                      <div className="col-span-8 sm:col-span-12 sm:mt-3">
+                        <div className="text-2xl sm:text-3xl text-white sm:text-center text-sp">
+                          {item.title}
+                        </div>
+                        <div className="pt-2 text-sm text-white sm:text-center opacity-50 leading-relaxed">
+                          {item.description}
+                        </div>
+                      </div>
                     </div>
-                    <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">
-                      {item.badge}
-                    </span>
                   </div>
-                  <h2 className="text-lg font-bold text-white mb-2">
-                    {item.title}
-                  </h2>
-                  <p className="text-sm text-slate-400 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-
-                <div className="mt-5 pt-4 border-t border-slate-800/80 flex items-center gap-1.5 text-xs text-emerald-400">
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>Configured & Verified</span>
-                </div>
-              </div>
-            );
-          })}
-        </section>
-
-        {/* Cloudflare Deployment Guide Section */}
-        <section className="mt-16 max-w-4xl mx-auto rounded-2xl bg-slate-900/70 border border-slate-800 p-6 sm:p-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-orange-400">
-                <Terminal className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-white">
-                  การตั้งค่า Deploy บน Cloudflare Pages
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-400">
-                  ค่าแนะนำสำหรับเชื่อมต่อ Git Repository หรืออัปโหลดผ่าน Wrangler CLI
-                </p>
-              </div>
+                );
+              })}
             </div>
-            <span className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-400 bg-orange-500/10 border border-orange-500/20 px-3 py-1.5 rounded-lg self-start sm:self-auto">
-              <span>output: &quot;export&quot;</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-              <span>Static HTML</span>
-            </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            {DEPLOY_STEPS.map((s) => (
-              <div
-                key={s.step}
-                className="p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2"
-              >
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-mono font-bold text-orange-400">
-                    STEP {s.step}
-                  </span>
-                  <span className="text-slate-400 font-medium">{s.label}</span>
-                </div>
-                <div className="font-mono text-xs sm:text-sm text-emerald-300 bg-slate-900 px-3 py-2 rounded-lg border border-slate-800 truncate">
-                  {s.command}
-                </div>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  {s.detail}
-                </p>
+          {/* Cards Grid */}
+          <div className="pb-6">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+              {/* Top Full-Width Card */}
+              <div className="md:col-span-12">
+                <Card className="rn-card rounded h-full">
+                  <CardContent className="p-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                      <div className="lg:col-span-6">
+                        <div className="px-6">
+                          <div className="pb-1 text-center text-white text-xl font-bold text-sp">
+                            Consectetur adipisicing elit
+                          </div>
+                          <div className="pb-2 text-center text-white text-[11px] opacity-25">
+                            アディピシションが行われます
+                          </div>
+                          <div className="pt-2 text-center text-white text-sm opacity-50 leading-relaxed">
+                            Placeat atque earum possimus vero ipsam aut est,
+                            suscipit nam perspiciatis consectetur incidunt,
+                            sint, magni voluptatem ducimus quis itaque deleniti
+                            ullam?
+                          </div>
+                          <div className="pt-6 text-center">
+                            <Button
+                              variant="outline"
+                              className="rounded text-xs py-2 px-6 h-auto"
+                            >
+                              Read more
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="lg:col-span-6 min-h-[280px]" />
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
-            ))}
-          </div>
-        </section>
-      </main>
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-slate-800/80 bg-slate-950/80 py-6">
-        <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
-          <div>
-            © {new Date().getFullYear()} AssayPage — MTI Next.js Workspace
-          </div>
-          <div className="flex items-center gap-4">
-            <span>Framework: Next.js 15</span>
-            <span>•</span>
-            <span>Target: Cloudflare Pages</span>
+              {/* Bottom 2 Half-Width Cards */}
+              {SUB_CARDS.map((card) => (
+                <div key={card.title} className="md:col-span-6">
+                  <Card className="rn-card rounded h-full">
+                    <CardContent className="p-6">
+                      <div className="pb-1 text-center text-white text-xl font-bold text-sp">
+                        {card.title}
+                      </div>
+                      <div className="pb-2 text-center text-white text-[11px] opacity-25">
+                        {card.subtitleJp}
+                      </div>
+                      <div className="pt-1 text-center text-white text-sm opacity-50 leading-relaxed">
+                        {card.description}
+                      </div>
+                      <div className="min-h-[280px]" />
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </footer>
+      </div>
+
+      {/* Footer Section */}
+      <div className="container">
+        {/* Web Templates */}
+        <div className="pt-6">
+          <div className="flex py-2 px-0">
+            <div className="text-white font-bold">Web Templates</div>
+          </div>
+          <Separator className="bg-white/25" />
+          <div className="py-2">
+            <div className="flex flex-wrap gap-y-2 gap-x-4 text-sm">
+              {WEB_TEMPLATES.map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-center text-xs text-white"
+                >
+                  <div className="pe-2">
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </div>
+                  <div className="pe-2">
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white no-underline hover:underline"
+                    >
+                      {item.label}
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bygone Journeys */}
+        <div className="pt-6">
+          <div className="flex py-2 px-0">
+            <div className="text-white font-bold">Bygone Journeys</div>
+          </div>
+          <Separator className="bg-white/25" />
+          <div className="py-2">
+            <div className="flex flex-wrap gap-y-2 gap-x-4 text-sm">
+              {BYGONE_JOURNEYS.map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-center text-xs text-white"
+                >
+                  <div className="pe-2">
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </div>
+                  <div className="pe-2">
+                    <Link
+                      href={item.href}
+                      className="text-white no-underline hover:underline"
+                    >
+                      {item.label}
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Social Media Icons */}
+        <div className="pt-6">
+          <div className="flex flex-wrap gap-y-2 gap-x-4 justify-center">
+            {SOCIAL_LINKS.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.label}>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={item.label}
+                    className="text-white hover:opacity-80 transition-opacity inline-flex"
+                    href={item.href}
+                  >
+                    <Icon className="w-7 h-7" />
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="pt-4 pb-6">
+          <div className="text-center text-white text-xs">
+            COPYRIGHT &copy; 2024 - ASSAYPAGE. POWERED BY RUNXRUN
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

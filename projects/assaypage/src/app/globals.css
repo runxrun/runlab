@@ -4,29 +4,65 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 24 95% 53%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --background: 218 23% 9%;
+    --foreground: 210 40% 98%;
+    --card: 218 22% 12%;
+    --card-foreground: 210 40% 98%;
+    --popover: 218 23% 9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 218 23% 9%;
+    --secondary: 217 19% 18%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 19% 18%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 19% 18%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 24 95% 53%;
-    --radius: 0.75rem;
+    --border: 0 0% 100%;
+    --input: 217 19% 18%;
+    --ring: 212.7 26.8% 83.9%;
+    --radius: 0.25rem;
   }
 }
 
 body {
-  @apply bg-slate-950 text-slate-50 antialiased;
+  background-color: #11151c;
+  color: #ffffff;
+  font-family: var(--font-inter), var(--font-kanit), var(--font-sarabun), var(--font-noto-jp), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer utilities {
+  .text-sp {
+    letter-spacing: 0.2em;
+  }
+
+  .rn-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .rn-text-shadow {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
+  }
+
+  .rn-banners {
+    background: radial-gradient(
+      circle at 50% 35%,
+      rgba(56, 189, 248, 0.12) 0%,
+      rgba(17, 21, 28, 0.95) 70%
+    );
+  }
+
+  .rn-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .rn-border-opacity {
+    border-color: rgba(255, 255, 255, 0.25) !important;
+  }
 }

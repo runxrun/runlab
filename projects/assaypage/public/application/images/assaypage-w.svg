@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="32" viewBox="0 0 160 32" fill="none">
+  <rect x="2" y="4" width="24" height="24" rx="5" stroke="white" stroke-width="2" />
+  <path d="M9 22L14 10L19 22M11 18H17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="36" y="21" fill="white" font-family="Inter, sans-serif" font-size="15" font-weight="700" letter-spacing="3.5">ASSAYPAGE</text>
+</svg>
