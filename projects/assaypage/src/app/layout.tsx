@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "AssayPage | Cloudflare Deployment Test",
   description:
     "Next.js Static Export + Tailwind CSS Home Page สำหรับทดสอบการ Deploy บน Cloudflare Pages",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
