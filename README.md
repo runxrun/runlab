@@ -35,7 +35,7 @@ npm run cli assaypage start
 ```
 
 ### Cloudflare Workers Deployment
-แต่ละโปรเจกต์มีไฟล์ `wrangler.jsonc` ของตัวเองใน `projects/<name>/wrangler.jsonc` และเมื่อสั่ง `build` ตัว CLI จะสร้างไฟล์ `.wrangler/deploy/config.json` ให้โดยอัตโนมัติ
+แต่ละโปรเจกต์มีไฟล์ `wrangler.jsonc` ของตัวเองใน `projects/<name>/wrangler.jsonc` และเมื่อสั่ง `build` ตัว CLI จะสร้างไฟล์ `wrangler.jsonc` ที่ Root ให้โดยอัตโนมัติ (ชี้ไปยัง `./projects/<name>/out`)
 
 การตั้งค่าบน **Cloudflare Dashboard (Settings -> Build)**:
 - **Root directory**: `/`

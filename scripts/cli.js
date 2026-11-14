@@ -100,20 +100,25 @@ const child = spawn(nextBin, cmdArgs, {
 
 child.on("exit", (code) => {
   if (code === 0 && command === "build") {
-    // Write .wrangler/deploy/config.json so `npx wrangler deploy` from root knows which project was built
-    const deployConfigDir = path.resolve(rootDir, ".wrangler", "deploy");
-    fs.mkdirSync(deployConfigDir, { recursive: true });
-    fs.writeFileSync(
-      path.resolve(deployConfigDir, "config.json"),
-      JSON.stringify(
-        { configPath: `../../projects/${project}/wrangler.jsonc` },
-        null,
-        2
-      )
-    );
-    console.log(
-      `✅ [${project}] Prepared Cloudflare deploy config (.wrangler/deploy/config.json -> projects/${project}/wrangler.jsonc)`
-    );
+    // Generate root wrangler.jsonc from projects/<project>/wrangler.jsonc so `npx wrangler deploy` from root works directly
+    const projectWranglerPath = path.resolve(projectDir, "wrangler.jsonc");
+    if (fs.existsSync(projectWranglerPath)) {
+      const rawConfig = JSON.parse(fs.readFileSync(projectWranglerPath, "utf8"));
+      const rootWranglerConfig = {
+        ...rawConfig,
+        assets: {
+          ...(rawConfig.assets || {}),
+          directory: `./projects/${project}/out`,
+        },
+      };
+      fs.writeFileSync(
+        path.resolve(rootDir, "wrangler.jsonc"),
+        JSON.stringify(rootWranglerConfig, null, 2) + "\n"
+      );
+      console.log(
+        `✅ [${project}] Generated root wrangler.jsonc for Cloudflare deploy (assets -> ./projects/${project}/out)`
+      );
+    }
   }
   process.exit(code ?? 0);
 });

@@ -8,6 +8,7 @@ dist/
 !.env.example
 .vercel
 .wrangler/
+/wrangler.jsonc
 *.tsbuildinfo
 next-env.d.ts
 
