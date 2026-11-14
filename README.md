@@ -33,3 +33,12 @@ npm run cli noagroup369 start
 npm run cli kachanamaha start
 npm run cli assaypage start
 ```
+
+### Cloudflare Workers Deployment
+แต่ละโปรเจกต์มีไฟล์ `wrangler.jsonc` ของตัวเองใน `projects/<name>/wrangler.jsonc` และเมื่อสั่ง `build` ตัว CLI จะสร้างไฟล์ `.wrangler/deploy/config.json` ให้โดยอัตโนมัติ
+
+การตั้งค่าบน **Cloudflare Dashboard (Settings -> Build)**:
+- **Root directory**: `/`
+- **Build command**: `npm run cli <project> build` (เช่น `npm run cli assaypage build`)
+- **Deploy command**: `npx wrangler deploy` (หรือ `npm run cli <project> deploy`)
+
